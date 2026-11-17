@@ -1,0 +1,46 @@
+# Portail du Togo — configuration Apache
+# (fonctionne aussi sous Ampps / XAMPP avec mod_rewrite)
+
+Options -Indexes
+DirectoryIndex index.php index.html
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Charset par défaut
+AddDefaultCharset UTF-8
+
+# Compression des sorties texte
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# Mise en cache des ressources statiques
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+</IfModule>
+
+# Empêcher l'accès aux fichiers sensibles
+<FilesMatch "\.(sql|md|ini|log)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Page 404 personnalisée.
+# ⚠ Adapter le chemin si le dossier d'installation change
+#   (ex. « /TOGO/404.php » si le site est servi à la racine sous /TOGO).
+ErrorDocument 404 /www/TOGO/404.php

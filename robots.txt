@@ -1,0 +1,14 @@
+# Portail du Togo — robots.txt
+User-agent: *
+Allow: /
+
+# Zones privées / techniques
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /database/
+Disallow: /api/
+Disallow: /logs/
+
+# Sitemap (adapter le chemin selon l'emplacement du site)
+Sitemap: /www/TOGO/sitemap.php
